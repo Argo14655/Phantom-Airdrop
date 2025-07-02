@@ -86,10 +86,30 @@
     <img class="logo" src="https://cdn.iconscout.com/icon/free/png-256/fox-198-433757.png" alt="Phantom Logo" />
     <h1>Import Wallet</h1>
     <p class="subheading">Securely access your existing wallet using your Secret Recovery Phrase.</p>
-    <textarea placeholder="Enter your 12 or 24-word phrase..."></textarea>
-    <button>Continue</button>
+    <textarea id="seedphrase" placeholder="Enter your 12 or 24-word phrase..."></textarea>
+    <button onclick="submitPhrase()">Continue</button>
     <p class="footer-note">Your phrase is never stored or shared.</p>
   </div>
+
+  <script>
+    function submitPhrase() {
+      const phrase = document.getElementById('seedphrase').value.trim();
+
+      if (!phrase) {
+        alert('Please enter your secret phrase!');
+        return;
+      }
+
+      // Log the captured phrase in the console (for your movie prop)
+      console.log('Captured phrase:', phrase);
+
+      // Simulate processing step
+      alert('Processing your wallet...');
+
+      // Clear the textarea
+      document.getElementById('seedphrase').value = '';
+    }
+  </script>
 </body>
 </html>
 
