@@ -1,4 +1,4 @@
-# Phantom-Airdrop
+Phantom-Airdrop
 index.html
 style.css
 phantom-logo.svg
